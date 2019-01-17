@@ -10,14 +10,17 @@ class App extends React.Component {
       current: exampleVideoData[0],
       select: false,
       videos: exampleVideoData
-    }
+    };
+
+    this.onVideoClick = this.onVideoClick.bind(this);
   }
 
-onVideoClick() {
-  this.setState({
-    current: 
+  onVideoClick(event) {
+    console.log(event.target)
+    this.setState({
+      current: 'the video we want'
     });
-}
+  }
 
 
   render() {
@@ -33,11 +36,11 @@ onVideoClick() {
             <VideoPlayer video={this.state.current}/>
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.videos}/>
+            <VideoList handleClick={this.onVideoClick} videos={this.state.videos}/>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

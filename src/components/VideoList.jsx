@@ -4,7 +4,7 @@ import VideoPlayer from './VideoPlayer.js';
 var VideoList = (props) => (
   <div className="video-list">
     {props.videos.map(item => 
-      <VideoListEntry video={item} />
+      <VideoListEntry handleClick={props.handleClick} video={item} />
     )}
   </div>
 );

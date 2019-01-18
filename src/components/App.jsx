@@ -2,23 +2,52 @@ import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
 import Search from './Search.js';
 import VideoPlayer from './VideoPlayer.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       current: exampleVideoData[0],
-      select: false,
       videos: exampleVideoData
     };
 
     this.onVideoClick = this.onVideoClick.bind(this);
+    this.onSearch = this.onSearch.bind(this);
+    this.searchYouTube = _.debounce(this.props.searchYouTube, 1000);
   }
 
-  onVideoClick(event) {
-    console.log(event.target)
+  componentDidMount() {
+    var options = {
+      max: 5,
+      query: '',
+      key: YOUTUBE_API_KEY
+    };
+
+    this.props.searchYouTube(options, (data) => {
+      this.setState({
+        currentVideo: data[0],
+        videos: data});
+    });
+  }
+
+  onVideoClick(video) {
     this.setState({
-      current: 'the video we want'
+      current: video
+    });
+  }
+
+  onSearch(query) {
+    var options = {
+      q: query,
+      max: 5,
+      key: YOUTUBE_API_KEY
+    };
+    this.props.searchYouTube(options, (data) => {
+      this.setState({
+        currentVideo: data[0],
+        videos: data});
     });
   }
 
@@ -28,7 +57,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search onSearch={this.onSearch} />
           </div>
         </nav>
         <div className="row">

@@ -15,7 +15,7 @@ class App extends React.Component {
 
     this.onVideoClick = this.onVideoClick.bind(this);
     this.onSearch = this.onSearch.bind(this);
-    this.searchYouTube = _.debounce(this.props.searchYouTube, 1000);
+    // this.searchYouTube = _.debounce(this.props.searchYouTube, 1000);
   }
 
   componentDidMount() {
